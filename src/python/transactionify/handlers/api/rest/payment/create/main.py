@@ -2,7 +2,13 @@
 
 import json
 from typing import Dict, Any
-from transactionify.tools.response import ok, bad_request, unauthorized, not_found, internal_server_error
+from transactionify.tools.response import (
+    ok,
+    bad_request,
+    unauthorized,
+    not_found,
+    internal_server_error,
+)
 from transactionify.services.payment import create_payment
 
 
@@ -45,35 +51,35 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
 
     # Extract user_id from authorizer context
     try:
-        user_id = event['requestContext']['authorizer']['lambda']['user_id']
+        user_id = event["requestContext"]["authorizer"]["lambda"]["user_id"]
     except (KeyError, TypeError):
-        return unauthorized('Unauthorized', 'AuthorizationError')
+        return unauthorized("Unauthorized", "AuthorizationError")
 
     # Extract account_id from path parameters
     try:
-        account_id = event['pathParameters']['account_id']
+        account_id = event["pathParameters"]["account_id"]
     except (KeyError, TypeError):
-        return bad_request('Missing account_id in path', 'ValidationError')
+        return bad_request("Missing account_id in path", "ValidationError")
 
     # Parse request body
     try:
-        body = json.loads(event.get('body', '{}'))
+        body = json.loads(event.get("body", "{}"))
     except json.JSONDecodeError:
-        return bad_request('Invalid JSON in request body', 'ValidationError')
+        return bad_request("Invalid JSON in request body", "ValidationError")
 
     # Extract amount
-    amount = body.get('amount', {})
+    amount = body.get("amount", {})
     if not isinstance(amount, dict):
-        return bad_request('Missing or invalid amount object', 'ValidationError')
+        return bad_request("Missing or invalid amount object", "ValidationError")
 
-    amount_value = amount.get('value', '')
-    amount_currency = amount.get('currency', '').upper()
+    amount_value = amount.get("value", "")
+    amount_currency = amount.get("currency", "").upper()
 
     if not amount_value:
-        return bad_request('Missing required field: amount.value', 'ValidationError')
+        return bad_request("Missing required field: amount.value", "ValidationError")
 
     if not amount_currency:
-        return bad_request('Missing required field: amount.currency', 'ValidationError')
+        return bad_request("Missing required field: amount.currency", "ValidationError")
 
     # Create payment
     try:
@@ -88,17 +94,21 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         error_msg = str(e).lower()
 
         # Check for specific error types
-        if 'account not found' in error_msg or 'does not belong' in error_msg:
-            return not_found('Account not found', 'NotFoundError')
-        elif 'currency mismatch' in error_msg:
-            return bad_request('Currency does not match account currency', 'ValidationError')
+        if "account not found" in error_msg or "does not belong" in error_msg:
+            return not_found("Account not found", "NotFoundError")
+        elif "currency mismatch" in error_msg:
+            return bad_request(
+                "Currency does not match account currency", "ValidationError"
+            )
 
         # Generic validation error
-        return bad_request('Invalid request data', 'ValidationError')
+        return bad_request("Invalid request data", "ValidationError")
 
     except Exception as e:
         # Log the actual error for debugging
         error_msg = f"Failed to create payment: {str(e)}"
         print(error_msg)
         # Return safe generic message to client
-        return internal_server_error('An error occurred while creating the payment', 'InternalError')
+        return internal_server_error(
+            "An error occurred while creating the payment", "InternalError"
+        )

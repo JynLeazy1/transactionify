@@ -6,8 +6,8 @@ from typing import Optional
 # Version field (13th character) must be '7'
 # Variant field (17th character) must be '8', '9', 'a', or 'b'
 UUID_V7_PATTERN = re.compile(
-    r'^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$',
-    re.IGNORECASE
+    r"^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+    re.IGNORECASE,
 )
 
 

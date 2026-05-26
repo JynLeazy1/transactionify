@@ -6,12 +6,12 @@ from typing import Dict, Any, Optional
 from datetime import datetime, timedelta
 
 # Initialize DynamoDB client and table
-dynamodb = boto3.resource('dynamodb')
-TABLE_NAME = os.environ.get('TABLE_NAME')
+dynamodb = boto3.resource("dynamodb")
+TABLE_NAME = os.environ.get("TABLE_NAME")
 table = dynamodb.Table(TABLE_NAME) if TABLE_NAME else None
 
 
-def get_by_full_match(pk: str, sk: str = '') -> Optional[Dict[str, Any]]:
+def get_by_full_match(pk: str, sk: str = "") -> Optional[Dict[str, Any]]:
     """
     Get an item from DynamoDB by exact PK and SK match.
 
@@ -26,13 +26,8 @@ def get_by_full_match(pk: str, sk: str = '') -> Optional[Dict[str, Any]]:
         raise ValueError("TABLE_NAME environment variable not set")
 
     try:
-        response = table.get_item(
-            Key={
-                'PK': pk,
-                'SK': sk
-            }
-        )
-        return response.get('Item')
+        response = table.get_item(Key={"PK": pk, "SK": sk})
+        return response.get("Item")
     except Exception as e:
         print(f"Error getting item from DynamoDB: {str(e)}")
         raise
@@ -54,11 +49,7 @@ def put_item(pk: str, sk: str, attributes: Dict[str, Any]) -> Dict[str, Any]:
         raise ValueError("TABLE_NAME environment variable not set")
 
     try:
-        item = {
-            'PK': pk,
-            'SK': sk,
-            **attributes
-        }
+        item = {"PK": pk, "SK": sk, **attributes}
 
         response = table.put_item(Item=item)
         return response
@@ -67,7 +58,9 @@ def put_item(pk: str, sk: str, attributes: Dict[str, Any]) -> Dict[str, Any]:
         raise
 
 
-def query_by_pk(pk: str, sk_prefix: Optional[str] = None, limit: Optional[int] = None) -> list:
+def query_by_pk(
+    pk: str, sk_prefix: Optional[str] = None, limit: Optional[int] = None
+) -> list:
     """
     Query items by partition key and optional sort key prefix.
 
@@ -83,23 +76,21 @@ def query_by_pk(pk: str, sk_prefix: Optional[str] = None, limit: Optional[int] =
         raise ValueError("TABLE_NAME environment variable not set")
 
     try:
-        query_params = {
-            'KeyConditionExpression': 'PK = :pk'
-        }
+        query_params = {"KeyConditionExpression": "PK = :pk"}
 
-        expression_values = {':pk': pk}
+        expression_values = {":pk": pk}
 
         if sk_prefix:
-            query_params['KeyConditionExpression'] += ' AND begins_with(SK, :sk_prefix)'
-            expression_values[':sk_prefix'] = sk_prefix
+            query_params["KeyConditionExpression"] += " AND begins_with(SK, :sk_prefix)"
+            expression_values[":sk_prefix"] = sk_prefix
 
-        query_params['ExpressionAttributeValues'] = expression_values
+        query_params["ExpressionAttributeValues"] = expression_values
 
         if limit:
-            query_params['Limit'] = limit
+            query_params["Limit"] = limit
 
         response = table.query(**query_params)
-        return response.get('Items', [])
+        return response.get("Items", [])
     except Exception as e:
         print(f"Error querying DynamoDB: {str(e)}")
         raise
@@ -115,7 +106,7 @@ def is_expired(item: Dict[str, Any]) -> bool:
     Returns:
         True if expired, False otherwise
     """
-    ttl = item.get('ttl')
+    ttl = item.get("ttl")
     if not ttl:
         return False
 
@@ -138,7 +129,7 @@ def query_by_pk_paginated(
     pk: str,
     sk_prefix: Optional[str] = None,
     limit: int = 20,
-    exclusive_start_key: Optional[Dict[str, Any]] = None
+    exclusive_start_key: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, Any]:
     """
     Query items by partition key with pagination support.
@@ -160,31 +151,29 @@ def query_by_pk_paginated(
 
     try:
         query_params = {
-            'KeyConditionExpression': 'PK = :pk',
-            'Limit': limit,
-            'ScanIndexForward': False  # Most recent first (DESC order by SK)
+            "KeyConditionExpression": "PK = :pk",
+            "Limit": limit,
+            "ScanIndexForward": False,  # Most recent first (DESC order by SK)
         }
 
-        expression_values = {':pk': pk}
+        expression_values = {":pk": pk}
 
         if sk_prefix:
-            query_params['KeyConditionExpression'] += ' AND begins_with(SK, :sk_prefix)'
-            expression_values[':sk_prefix'] = sk_prefix
+            query_params["KeyConditionExpression"] += " AND begins_with(SK, :sk_prefix)"
+            expression_values[":sk_prefix"] = sk_prefix
 
-        query_params['ExpressionAttributeValues'] = expression_values
+        query_params["ExpressionAttributeValues"] = expression_values
 
         if exclusive_start_key:
-            query_params['ExclusiveStartKey'] = exclusive_start_key
+            query_params["ExclusiveStartKey"] = exclusive_start_key
 
         response = table.query(**query_params)
 
-        result = {
-            'items': response.get('Items', [])
-        }
+        result = {"items": response.get("Items", [])}
 
         # Include LastEvaluatedKey if there are more results
-        if 'LastEvaluatedKey' in response:
-            result['last_evaluated_key'] = response['LastEvaluatedKey']
+        if "LastEvaluatedKey" in response:
+            result["last_evaluated_key"] = response["LastEvaluatedKey"]
 
         return result
     except Exception as e:

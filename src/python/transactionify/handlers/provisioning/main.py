@@ -32,7 +32,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     print(f"Provisioning event: {json.dumps(event)}")
 
     # Extract or generate user_id
-    user_id = event.get('user_id', '')
+    user_id = event.get("user_id", "")
 
     if not user_id:
         # Generate new user_id (UUIDv7)
@@ -45,12 +45,14 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         print(f"Successfully created API key for user: {user_id}")
 
         return {
-            'statusCode': 200,
-            'body': json.dumps({
-                'api_key': api_key,
-                'user_id': user_id,
-                'message': 'API key successfully created'
-            })
+            "statusCode": 200,
+            "body": json.dumps(
+                {
+                    "api_key": api_key,
+                    "user_id": user_id,
+                    "message": "API key successfully created",
+                }
+            ),
         }
 
     except ValueError as e:
@@ -58,20 +60,18 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         error_msg = str(e)
         print(f"Validation error: {error_msg}")
         return {
-            'statusCode': 400,
-            'body': json.dumps({
-                'error': 'Invalid user_id format',
-                'message': error_msg
-            })
+            "statusCode": 400,
+            "body": json.dumps(
+                {"error": "Invalid user_id format", "message": error_msg}
+            ),
         }
 
     except Exception as e:
         error_msg = f"Failed to create API key: {str(e)}"
         print(error_msg)
         return {
-            'statusCode': 500,
-            'body': json.dumps({
-                'error': 'Internal server error',
-                'message': error_msg
-            })
+            "statusCode": 500,
+            "body": json.dumps(
+                {"error": "Internal server error", "message": error_msg}
+            ),
         }

@@ -5,7 +5,7 @@ from transactionify.tools.aws.dynamodb import put_item, get_ttl_2_weeks
 from transactionify.tools.generators.uuid import generate_uuidv7
 
 
-ALLOWED_CURRENCIES = ['USD', 'EUR', 'GBP']
+ALLOWED_CURRENCIES = ["USD", "EUR", "GBP"]
 
 
 def get_account_by_id(id: str) -> dict:
@@ -52,7 +52,9 @@ def create_account(user_id: str, currency: str) -> Dict[str, Any]:
     """
     # Validate currency
     if currency not in ALLOWED_CURRENCIES:
-        raise ValueError(f"Invalid currency. Must be one of: {', '.join(ALLOWED_CURRENCIES)}")
+        raise ValueError(
+            f"Invalid currency. Must be one of: {', '.join(ALLOWED_CURRENCIES)}"
+        )
 
     # Generate account ID
     account_id = generate_uuidv7()
@@ -64,27 +66,18 @@ def create_account(user_id: str, currency: str) -> Dict[str, Any]:
     put_item(
         pk=f"USER_ID#{user_id}",
         sk=f"ACCOUNT#{account_id}",
-        attributes={
-            'currency': currency,
-            'ttl': ttl
-        }
+        attributes={"currency": currency, "ttl": ttl},
     )
 
     # Create initial balance record
     put_item(
         pk=f"ACCOUNT#{account_id}",
         sk="BALANCE",
-        attributes={
-            'value': '0.00',
-            'ttl': ttl
-        }
+        attributes={"value": "0.00", "ttl": ttl},
     )
 
     return {
-        'account_id': account_id,
-        'currency': currency,
-        'balance': {
-            'value': '0.00',
-            'currency': currency
-        }
+        "account_id": account_id,
+        "currency": currency,
+        "balance": {"value": "0.00", "currency": currency},
     }

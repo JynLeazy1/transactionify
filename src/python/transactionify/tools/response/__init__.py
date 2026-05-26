@@ -20,11 +20,11 @@ def ok(body: Dict[str, Any]) -> Dict:
         {'statusCode': 200, 'body': '{"message": "Success"}'}
     """
     return {
-        'statusCode': 200,
-        'headers': {
-            'Content-Type': 'application/json',
+        "statusCode": 200,
+        "headers": {
+            "Content-Type": "application/json",
         },
-        'body': json.dumps(body)
+        "body": json.dumps(body),
     }
 
 
@@ -43,14 +43,14 @@ def bad_request(message: str, error_type: Optional[str] = None) -> Dict[str, Any
         >>> bad_request('Invalid input')
         {'statusCode': 400, 'body': '{"message": "Invalid input"}'}
     """
-    body = {'message': message}
+    body = {"message": message}
 
     return {
-        'statusCode': 400,
-        'headers': {
-            'Content-Type': 'application/json',
+        "statusCode": 400,
+        "headers": {
+            "Content-Type": "application/json",
         },
-        'body': json.dumps(body)
+        "body": json.dumps(body),
     }
 
 
@@ -65,14 +65,14 @@ def unauthorized(message: str, error_type: Optional[str] = None) -> Dict[str, An
     Returns:
         API Gateway Lambda response format
     """
-    body = {'message': message}
+    body = {"message": message}
 
     return {
-        'statusCode': 401,
-        'headers': {
-            'Content-Type': 'application/json',
+        "statusCode": 401,
+        "headers": {
+            "Content-Type": "application/json",
         },
-        'body': json.dumps(body)
+        "body": json.dumps(body),
     }
 
 
@@ -87,18 +87,20 @@ def not_found(message: str, error_type: Optional[str] = None) -> Dict[str, Any]:
     Returns:
         API Gateway Lambda response format
     """
-    body = {'message': message}
+    body = {"message": message}
 
     return {
-        'statusCode': 404,
-        'headers': {
-            'Content-Type': 'application/json',
+        "statusCode": 404,
+        "headers": {
+            "Content-Type": "application/json",
         },
-        'body': json.dumps(body)
+        "body": json.dumps(body),
     }
 
 
-def internal_server_error(message: str, error_type: Optional[str] = None) -> Dict[str, Any]:
+def internal_server_error(
+    message: str, error_type: Optional[str] = None
+) -> Dict[str, Any]:
     """
     Create a 500 Internal Server Error response.
 
@@ -109,12 +111,12 @@ def internal_server_error(message: str, error_type: Optional[str] = None) -> Dic
     Returns:
         API Gateway Lambda response format
     """
-    body = {'message': message}
+    body = {"message": message}
 
     return {
-        'statusCode': 500,
-        'headers': {
-            'Content-Type': 'application/json',
+        "statusCode": 500,
+        "headers": {
+            "Content-Type": "application/json",
         },
-        'body': json.dumps(body)
+        "body": json.dumps(body),
     }
