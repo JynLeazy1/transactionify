@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@devex/framework':
         specifier: github:JynLeazy1/devex#path:/packages/framework
-        version: https://codeload.github.com/JynLeazy1/devex/tar.gz/0f5a241e6c2ed9a1c3ae523d5335f2fc2f9c08dd#path:/packages/framework(@github-actions-workflow-ts/lib@2.5.0)(aws-cdk-lib@2.257.0(constructs@10.6.0))(constructs@10.6.0)
+        version: https://codeload.github.com/JynLeazy1/devex/tar.gz/de7598e6554d44c0031e8374995e36d4fc4b843f#path:/packages/framework(@github-actions-workflow-ts/lib@2.5.0)(aws-cdk-lib@2.257.0(constructs@10.6.0))(constructs@10.6.0)
       '@github-actions-workflow-ts/lib':
         specifier: ^2.5.0
         version: 2.5.0
@@ -236,8 +236,8 @@ packages:
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
     engines: {node: '>=12'}
 
-  '@devex/framework@https://codeload.github.com/JynLeazy1/devex/tar.gz/0f5a241e6c2ed9a1c3ae523d5335f2fc2f9c08dd#path:/packages/framework':
-    resolution: {gitHosted: true, integrity: sha512-4BcXE8dW3wXaIN/+Pii4Is8LY+8WQtQH10bBRxJG6WpL+OtTqSSFP60eoyf1OryEXFEaj8vUV0GdBAI9S5f66w==, tarball: https://codeload.github.com/JynLeazy1/devex/tar.gz/0f5a241e6c2ed9a1c3ae523d5335f2fc2f9c08dd}
+  '@devex/framework@https://codeload.github.com/JynLeazy1/devex/tar.gz/de7598e6554d44c0031e8374995e36d4fc4b843f#path:/packages/framework':
+    resolution: {path: /packages/framework, tarball: https://codeload.github.com/JynLeazy1/devex/tar.gz/de7598e6554d44c0031e8374995e36d4fc4b843f}
     version: 0.1.0
     engines: {node: '>=18'}
     peerDependencies:
@@ -705,8 +705,8 @@ packages:
     resolution: {integrity: sha512-oP5VkATKlNwcgvxi0vM0p/D3n2C3EReYVX+DNYs5TjZFn/oQt2j+4sVJtSMr18pdRr8wjTcBl6LoV+FUwzPmNA==}
     engines: {node: '>=18'}
 
-  brace-expansion@1.1.14:
-    resolution: {integrity: sha512-MWPGfDxnyzKU7rNOW9SP/c50vi3xrmrua/+6hfPbCS2ABNWfx24vPidzvC7krjU/RTo235sV776ymlsMtGKj8g==}
+  brace-expansion@1.1.15:
+    resolution: {integrity: sha512-EwOCDEex4quD37XhqM3omwtMoJjr//isUZz1JopUNWms+4Z2ViyM/k1YIRePpoVNnQhENnxtFjLaxNHrT7xIUg==}
 
   braces@3.0.3:
     resolution: {integrity: sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==}
@@ -2082,7 +2082,7 @@ snapshots:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
 
-  '@devex/framework@https://codeload.github.com/JynLeazy1/devex/tar.gz/0f5a241e6c2ed9a1c3ae523d5335f2fc2f9c08dd#path:/packages/framework(@github-actions-workflow-ts/lib@2.5.0)(aws-cdk-lib@2.257.0(constructs@10.6.0))(constructs@10.6.0)':
+  '@devex/framework@https://codeload.github.com/JynLeazy1/devex/tar.gz/de7598e6554d44c0031e8374995e36d4fc4b843f#path:/packages/framework(@github-actions-workflow-ts/lib@2.5.0)(aws-cdk-lib@2.257.0(constructs@10.6.0))(constructs@10.6.0)':
     dependencies:
       '@github-actions-workflow-ts/lib': 2.5.0
       aws-cdk-lib: 2.257.0(constructs@10.6.0)
@@ -2611,7 +2611,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  brace-expansion@1.1.14:
+  brace-expansion@1.1.15:
     dependencies:
       balanced-match: 1.0.2
       concat-map: 0.0.1
@@ -3486,7 +3486,7 @@ snapshots:
 
   minimatch@3.1.5:
     dependencies:
-      brace-expansion: 1.1.14
+      brace-expansion: 1.1.15
 
   minimist@1.2.8: {}
 
