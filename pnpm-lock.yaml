@@ -237,7 +237,7 @@ packages:
     engines: {node: '>=12'}
 
   '@devex/framework@https://codeload.github.com/JynLeazy1/devex/tar.gz/de7598e6554d44c0031e8374995e36d4fc4b843f#path:/packages/framework':
-    resolution: {gitHosted: true, integrity: sha512-8w0W1WnX/KB+nCV+YAZlJdiFWw0FDPoQurG7v8lcLYOiPjn0dTXvyVGz9qdgobuDjWT6idO2hbdDwb6ZTWeYPQ==, tarball: https://codeload.github.com/JynLeazy1/devex/tar.gz/de7598e6554d44c0031e8374995e36d4fc4b843f}
+    resolution: {path: /packages/framework, tarball: https://codeload.github.com/JynLeazy1/devex/tar.gz/de7598e6554d44c0031e8374995e36d4fc4b843f}
     version: 0.1.0
     engines: {node: '>=18'}
     peerDependencies:
@@ -705,8 +705,8 @@ packages:
     resolution: {integrity: sha512-oP5VkATKlNwcgvxi0vM0p/D3n2C3EReYVX+DNYs5TjZFn/oQt2j+4sVJtSMr18pdRr8wjTcBl6LoV+FUwzPmNA==}
     engines: {node: '>=18'}
 
-  brace-expansion@1.1.14:
-    resolution: {integrity: sha512-MWPGfDxnyzKU7rNOW9SP/c50vi3xrmrua/+6hfPbCS2ABNWfx24vPidzvC7krjU/RTo235sV776ymlsMtGKj8g==}
+  brace-expansion@1.1.15:
+    resolution: {integrity: sha512-EwOCDEex4quD37XhqM3omwtMoJjr//isUZz1JopUNWms+4Z2ViyM/k1YIRePpoVNnQhENnxtFjLaxNHrT7xIUg==}
 
   braces@3.0.3:
     resolution: {integrity: sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==}
@@ -2611,7 +2611,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  brace-expansion@1.1.14:
+  brace-expansion@1.1.15:
     dependencies:
       balanced-match: 1.0.2
       concat-map: 0.0.1
@@ -3486,7 +3486,7 @@ snapshots:
 
   minimatch@3.1.5:
     dependencies:
-      brace-expansion: 1.1.14
+      brace-expansion: 1.1.15
 
   minimist@1.2.8: {}
 
