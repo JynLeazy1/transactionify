@@ -5,7 +5,7 @@ export const profile: PythonLambdaProfile = {
   serviceName: 'transactionify',
   team: 'transactionify',
   repoUrl: 'https://github.com/JynLeazy1/transactionify',
-  workIdPattern: '[A-Z][A-Z0-9]*-\d+',
+  workIdPattern: '[A-Z][A-Z0-9]*-[0-9]+',
   awsRegion: 'us-east-1',
   runtime: '3.12',
   packageManager: 'uv',

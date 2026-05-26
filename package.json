@@ -27,7 +27,7 @@
     "typescript": "~5.3.0"
   },
   "dependencies": {
-    "@devex/framework": "file:../devex/packages/framework",
+    "@devex/framework": "github:JynLeazy1/devex#path:/packages/framework",
     "@github-actions-workflow-ts/lib": "^2.5.0",
     "@modelcontextprotocol/sdk": "^1.17.5",
     "aws-cdk-lib": "^2.168.0",
