@@ -42,6 +42,12 @@ export class TransactionifyStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props)
 
+    // NOTE (PoC scope): the upstream baseline included a `provisioningLambda`
+    // that received `table.grantWriteData(...)` but was NOT exposed as an API
+    // route. It's intentionally dropped here while we evaluate adding an
+    // `extraGrants?: ExtraGrant[]` prop to `PythonLambdaApiProps` for
+    // non-route Lambdas — additive, non-breaking. Tracked as an inner-source
+    // contribution opportunity.
     new PythonLambdaApi(this, 'Api', {
       serviceName: profile.serviceName,
       runtime: profile.runtime,
