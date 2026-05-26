@@ -1,19 +1,16 @@
 """Transaction service for managing transactions."""
 
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, Optional
 from transactionify.tools.aws.dynamodb import (
     query_by_pk_paginated,
     get_by_full_match,
     encode_cursor,
-    decode_cursor
+    decode_cursor,
 )
 
 
 def list_transactions(
-    user_id: str,
-    account_id: str,
-    limit: int = 20,
-    cursor: Optional[str] = None
+    user_id: str, account_id: str, limit: int = 20, cursor: Optional[str] = None
 ) -> Dict[str, Any]:
     """
     List transactions for an account with pagination support.
@@ -63,10 +60,10 @@ def list_transactions(
     account = get_by_full_match(pk=account_pk, sk=account_sk)
 
     if not account:
-        raise ValueError(f"Account not found or does not belong to user")
+        raise ValueError("Account not found or does not belong to user")
 
     # Get account currency
-    account_currency = account.get('currency', '')
+    account_currency = account.get("currency", "")
 
     # Decode cursor if provided
     exclusive_start_key = None
@@ -84,37 +81,39 @@ def list_transactions(
         pk=transaction_pk,
         sk_prefix=transaction_sk_prefix,
         limit=limit,
-        exclusive_start_key=exclusive_start_key
+        exclusive_start_key=exclusive_start_key,
     )
 
     # Transform transaction records to API format
     transactions = []
-    for record in result['items']:
+    for record in result["items"]:
         # Extract transaction ID from SK (format: TRANSACTION#<id>)
-        sk = record.get('SK', '')
-        transaction_id = sk.replace('TRANSACTION#', '') if sk.startswith('TRANSACTION#') else ''
+        sk = record.get("SK", "")
+        transaction_id = (
+            sk.replace("TRANSACTION#", "") if sk.startswith("TRANSACTION#") else ""
+        )
 
         # Build transaction object
         transaction = {
-            'id': transaction_id,
-            'type': record.get('type', 'payment'),
-            'amount': {
-                'value': record.get('value', '0.00'),
-                'currency': record.get('currency', account_currency)
+            "id": transaction_id,
+            "type": record.get("type", "payment"),
+            "amount": {
+                "value": record.get("value", "0.00"),
+                "currency": record.get("currency", account_currency),
             },
-            'timestamp': record.get('timestamp', '')
+            "timestamp": record.get("timestamp", ""),
         }
 
         transactions.append(transaction)
 
     # Build response with pagination metadata
     response = {
-        'transactions': transactions,
-        'has_more': 'last_evaluated_key' in result
+        "transactions": transactions,
+        "has_more": "last_evaluated_key" in result,
     }
 
     # Include next cursor if there are more results
-    if 'last_evaluated_key' in result:
-        response['next_cursor'] = encode_cursor(result['last_evaluated_key'])
+    if "last_evaluated_key" in result:
+        response["next_cursor"] = encode_cursor(result["last_evaluated_key"])
 
     return response

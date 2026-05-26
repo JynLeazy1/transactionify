@@ -41,10 +41,10 @@ def get_balance(user_id: str, account_id: str) -> Dict[str, Any]:
     account = get_by_full_match(pk=account_pk, sk=account_sk)
 
     if not account:
-        raise ValueError(f"Account not found or does not belong to user")
+        raise ValueError("Account not found or does not belong to user")
 
     # Get account currency
-    account_currency = account.get('currency', '')
+    account_currency = account.get("currency", "")
 
     # Get balance record
     balance_pk = f"ACCOUNT#{account_id}"
@@ -52,18 +52,15 @@ def get_balance(user_id: str, account_id: str) -> Dict[str, Any]:
     balance_record = get_by_full_match(pk=balance_pk, sk=balance_sk)
 
     if not balance_record:
-        raise ValueError(f"Balance record not found for account")
+        raise ValueError("Balance record not found for account")
 
     # Get balance value
-    balance_value = balance_record.get('value', '0.00')
+    balance_value = balance_record.get("value", "0.00")
 
     # Get current timestamp in ISO 8601 format
-    current_time = datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
+    current_time = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 
     return {
-        'balance': {
-            'value': balance_value,
-            'currency': account_currency
-        },
-        'date': current_time
+        "balance": {"value": balance_value, "currency": account_currency},
+        "date": current_time,
     }

@@ -2,7 +2,12 @@
 
 import json
 from typing import Dict, Any
-from transactionify.tools.response import ok, bad_request, unauthorized, internal_server_error
+from transactionify.tools.response import (
+    ok,
+    bad_request,
+    unauthorized,
+    internal_server_error,
+)
 from transactionify.services.account import create_account
 
 
@@ -41,20 +46,20 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
 
     # Extract user_id from authorizer context
     try:
-        user_id = event['requestContext']['authorizer']['lambda']['user_id']
+        user_id = event["requestContext"]["authorizer"]["lambda"]["user_id"]
     except (KeyError, TypeError):
-        return unauthorized('Unauthorized', 'AuthorizationError')
+        return unauthorized("Unauthorized", "AuthorizationError")
 
     # Parse request body
     try:
-        body = json.loads(event.get('body', '{}'))
+        body = json.loads(event.get("body", "{}"))
     except json.JSONDecodeError:
-        return bad_request('Invalid JSON in request body', 'ValidationError')
+        return bad_request("Invalid JSON in request body", "ValidationError")
 
     # Extract currency
-    currency = body.get('currency', '').upper()
+    currency = body.get("currency", "").upper()
     if not currency:
-        return bad_request('Missing required field: currency', 'ValidationError')
+        return bad_request("Missing required field: currency", "ValidationError")
 
     # Create account
     try:
@@ -62,23 +67,24 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         print(f"Successfully created account for user: {user_id}")
 
         # Return id and balance
-        return ok({
-            'id': account['account_id'],
-            'balance': account['balance']
-        })
+        return ok({"id": account["account_id"], "balance": account["balance"]})
 
     except ValueError as e:
         # Validation error from service - log the actual error but return safe message
         print(f"Validation error creating account: {str(e)}")
         # Check if it's a currency validation error
-        if 'currency' in str(e).lower():
-            return bad_request('Invalid currency. Allowed values: USD, EUR, GBP', 'ValidationError')
+        if "currency" in str(e).lower():
+            return bad_request(
+                "Invalid currency. Allowed values: USD, EUR, GBP", "ValidationError"
+            )
         # Generic validation error
-        return bad_request('Invalid request data', 'ValidationError')
+        return bad_request("Invalid request data", "ValidationError")
 
     except Exception as e:
         # Log the actual error for debugging
         error_msg = f"Failed to create account: {str(e)}"
         print(error_msg)
         # Return safe generic message to client
-        return internal_server_error('An error occurred while creating the account', 'InternalError')
+        return internal_server_error(
+            "An error occurred while creating the account", "InternalError"
+        )

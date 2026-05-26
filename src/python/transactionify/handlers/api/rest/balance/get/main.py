@@ -2,7 +2,12 @@
 
 import json
 from typing import Dict, Any
-from transactionify.tools.response import ok, unauthorized, not_found, internal_server_error
+from transactionify.tools.response import (
+    ok,
+    unauthorized,
+    not_found,
+    internal_server_error,
+)
 from transactionify.services.balance import get_balance
 
 
@@ -44,15 +49,15 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
 
     # Extract user_id from authorizer context
     try:
-        user_id = event['requestContext']['authorizer']['lambda']['user_id']
+        user_id = event["requestContext"]["authorizer"]["lambda"]["user_id"]
     except (KeyError, TypeError):
-        return unauthorized('Unauthorized')
+        return unauthorized("Unauthorized")
 
     # Extract account_id from path parameters
     try:
-        account_id = event['pathParameters']['account_id']
+        account_id = event["pathParameters"]["account_id"]
     except (KeyError, TypeError):
-        return not_found('Account not found')
+        return not_found("Account not found")
 
     # Get balance
     try:
@@ -67,17 +72,17 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         error_msg = str(e).lower()
 
         # Check for specific error types
-        if 'account not found' in error_msg or 'does not belong' in error_msg:
-            return not_found('Account not found')
-        elif 'balance record not found' in error_msg:
-            return not_found('Balance not found')
+        if "account not found" in error_msg or "does not belong" in error_msg:
+            return not_found("Account not found")
+        elif "balance record not found" in error_msg:
+            return not_found("Balance not found")
 
         # Generic validation error
-        return not_found('Resource not found')
+        return not_found("Resource not found")
 
     except Exception as e:
         # Log the actual error for debugging
         error_msg = f"Failed to get balance: {str(e)}"
         print(error_msg)
         # Return safe generic message to client
-        return internal_server_error('An error occurred while retrieving the balance')
+        return internal_server_error("An error occurred while retrieving the balance")

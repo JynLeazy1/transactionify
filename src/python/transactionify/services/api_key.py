@@ -14,7 +14,7 @@ def get_api_key(value: str) -> dict:
         API key item dict if found and valid, empty dict otherwise
     """
     pk = f"API_KEY#{value}"
-    item = get_by_full_match(pk=pk, sk='METADATA')
+    item = get_by_full_match(pk=pk, sk="METADATA")
 
     if not item:
         return {}
@@ -56,12 +56,6 @@ def register_new_api_key(user_id: str) -> str:
 
     # Store API key in DynamoDB
     pk = f"API_KEY#{api_key}"
-    put_item(
-        pk=pk,
-        sk='METADATA',
-        attributes={
-            'user_id': user_id
-        }
-    )
+    put_item(pk=pk, sk="METADATA", attributes={"user_id": user_id})
 
     return api_key

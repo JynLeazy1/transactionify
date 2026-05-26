@@ -25,6 +25,7 @@ def generate_uuidv7() -> str:
     try:
         # Try to use uuid7 if available
         import uuid_utils as uuid_lib
+
         return str(uuid_lib.uuid7())
     except ImportError:
         # Fallback: Generate uuid4 and modify version bits to 7
@@ -32,6 +33,6 @@ def generate_uuidv7() -> str:
         uid = uuid.uuid4()
         uid_str = str(uid)
         # Replace version nibble (13th char after hyphens) with '7'
-        parts = uid_str.split('-')
-        parts[2] = '7' + parts[2][1:]
-        return '-'.join(parts)
+        parts = uid_str.split("-")
+        parts[2] = "7" + parts[2][1:]
+        return "-".join(parts)
