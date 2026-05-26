@@ -2,6 +2,10 @@
 # build scripts for `@devex/framework` (git-hosted dep with a `prepare`
 # script that compiles TypeScript to dist/). pnpm v11+ blocks build
 # scripts on git deps by default until explicitly allowed.
+# pnpm v11 requires a `packages:` field even when this file exists only to
+# scope `allowBuilds`. Single-package "workspace" → declare just the root.
+packages:
+  - .
 allowBuilds:
   '@devex/framework': true
   esbuild: false
