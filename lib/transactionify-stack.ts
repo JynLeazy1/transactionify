@@ -6,10 +6,18 @@
 // HTTP API, authorizer, per-route Lambdas, and FinOps tag enforcement.
 
 import * as cdk from 'aws-cdk-lib'
-import { PythonLambdaApi, type RouteDefinition } from '@devex/framework'
+import {
+  PythonLambdaApi,
+  type EnvironmentConfig,
+  type RouteDefinition,
+} from '@devex/framework'
 import { Construct } from 'constructs'
 
 import { profile } from '../devex.profile'
+
+export interface TransactionifyStackProps extends cdk.StackProps {
+  readonly environment: EnvironmentConfig
+}
 
 const ROUTES: readonly RouteDefinition[] = [
   {
@@ -39,7 +47,7 @@ const ROUTES: readonly RouteDefinition[] = [
 ]
 
 export class TransactionifyStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+  constructor(scope: Construct, id: string, props: TransactionifyStackProps) {
     super(scope, id, props)
 
     // NOTE (PoC scope): the upstream baseline included a `provisioningLambda`
@@ -54,12 +62,7 @@ export class TransactionifyStack extends cdk.Stack {
       sourcePath: profile.sourcePath,
       authorizerHandler: 'transactionify.handlers.authorizer.main.handler',
       routes: ROUTES,
-      environment: {
-        stage: 'sandbox',
-        account: props?.env?.account ?? process.env.CDK_DEFAULT_ACCOUNT ?? '',
-        region: props?.env?.region ?? process.env.CDK_DEFAULT_REGION ?? 'us-east-1',
-        monitoring: 'basic',
-      },
+      environment: props.environment,
       tags: {
         'finops:Project': 'Transactionify',
         'finops:Service': 'Transactionify API',
