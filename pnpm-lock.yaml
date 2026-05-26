@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@devex/framework':
         specifier: github:JynLeazy1/devex#path:/packages/framework
-        version: https://codeload.github.com/JynLeazy1/devex/tar.gz/de7598e6554d44c0031e8374995e36d4fc4b843f#path:/packages/framework(@github-actions-workflow-ts/lib@2.5.0)(aws-cdk-lib@2.257.0(constructs@10.6.0))(constructs@10.6.0)
+        version: https://codeload.github.com/JynLeazy1/devex/tar.gz/754dc071875dd8e01549881892f1500611ee39c2#path:/packages/framework(@github-actions-workflow-ts/lib@2.5.0)(aws-cdk-lib@2.257.0(constructs@10.6.0))(constructs@10.6.0)
       '@github-actions-workflow-ts/lib':
         specifier: ^2.5.0
         version: 2.5.0
@@ -236,8 +236,8 @@ packages:
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
     engines: {node: '>=12'}
 
-  '@devex/framework@https://codeload.github.com/JynLeazy1/devex/tar.gz/de7598e6554d44c0031e8374995e36d4fc4b843f#path:/packages/framework':
-    resolution: {path: /packages/framework, tarball: https://codeload.github.com/JynLeazy1/devex/tar.gz/de7598e6554d44c0031e8374995e36d4fc4b843f}
+  '@devex/framework@https://codeload.github.com/JynLeazy1/devex/tar.gz/754dc071875dd8e01549881892f1500611ee39c2#path:/packages/framework':
+    resolution: {gitHosted: true, integrity: sha512-VfwXcqwfuK0H5joY/UM8Qpu7HJ3+T4VMV8ofDLY7ML9SQgzwVRZPMsezhvB9oa1Pt7UYqAdce/D4nB27Jpb5xw==, tarball: https://codeload.github.com/JynLeazy1/devex/tar.gz/754dc071875dd8e01549881892f1500611ee39c2}
     version: 0.1.0
     engines: {node: '>=18'}
     peerDependencies:
@@ -2082,7 +2082,7 @@ snapshots:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
 
-  '@devex/framework@https://codeload.github.com/JynLeazy1/devex/tar.gz/de7598e6554d44c0031e8374995e36d4fc4b843f#path:/packages/framework(@github-actions-workflow-ts/lib@2.5.0)(aws-cdk-lib@2.257.0(constructs@10.6.0))(constructs@10.6.0)':
+  '@devex/framework@https://codeload.github.com/JynLeazy1/devex/tar.gz/754dc071875dd8e01549881892f1500611ee39c2#path:/packages/framework(@github-actions-workflow-ts/lib@2.5.0)(aws-cdk-lib@2.257.0(constructs@10.6.0))(constructs@10.6.0)':
     dependencies:
       '@github-actions-workflow-ts/lib': 2.5.0
       aws-cdk-lib: 2.257.0(constructs@10.6.0)
