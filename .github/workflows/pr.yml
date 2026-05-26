@@ -19,7 +19,7 @@ jobs:
       - name: Validate Work ID in branch name
         env:
           BRANCH: ${{ github.head_ref || github.ref_name }}
-          WORK_ID_PATTERN: '[A-Z][A-Z0-9]*-\d+'
+          WORK_ID_PATTERN: '[A-Z][A-Z0-9]*-[0-9]+'
         run: |-
           if ! echo "$BRANCH" | grep -qE "$WORK_ID_PATTERN"; then
             echo "::error::Branch '$BRANCH' is missing a Work ID matching pattern: $WORK_ID_PATTERN"
@@ -29,7 +29,7 @@ jobs:
       - name: Validate Work ID in PR commits
         if: github.event_name == 'pull_request'
         env:
-          WORK_ID_PATTERN: '[A-Z][A-Z0-9]*-\d+'
+          WORK_ID_PATTERN: '[A-Z][A-Z0-9]*-[0-9]+'
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: >-
@@ -47,7 +47,7 @@ jobs:
         if: github.event_name == 'pull_request'
         env:
           PR_TITLE: ${{ github.event.pull_request.title }}
-          WORK_ID_PATTERN: '[A-Z][A-Z0-9]*-\d+'
+          WORK_ID_PATTERN: '[A-Z][A-Z0-9]*-[0-9]+'
         run: |-
           if ! echo "$PR_TITLE" | grep -qE "$WORK_ID_PATTERN"; then
             echo "::error::PR title is missing Work ID matching: $WORK_ID_PATTERN"
@@ -151,7 +151,7 @@ jobs:
             ${{ contains(needs.*.result, 'failure') && 'failure' ||
             (contains(needs.*.result, 'cancelled') && 'cancelled' || 'success')
             }}
-          WORK_ID_PATTERN: '[A-Z][A-Z0-9]*-\d+'
+          WORK_ID_PATTERN: '[A-Z][A-Z0-9]*-[0-9]+'
           TEAM: transactionify
           REPO: ${{ github.server_url }}/${{ github.repository }}
           ACTOR: ${{ github.actor }}
