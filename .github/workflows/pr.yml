@@ -66,9 +66,15 @@ jobs:
         with:
           python-version: '3.12'
           enable-cache: true
+          cache-dependency-glob: |-
+            **/uv.lock
+            **/pyproject.toml
+            **/requirements.txt
       - name: Install Python dependencies (uv)
         working-directory: src/python
-        run: uv sync --frozen
+        run: >-
+          if [ -f uv.lock ]; then uv sync --frozen; else uv pip install -r
+          requirements.txt; fi
       - name: Run lint
         run: ruff check src/python && ruff format --check src/python
       - name: Run tests
