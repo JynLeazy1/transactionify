@@ -5,3 +5,11 @@ python-dateutil==2.9.0.post0
 s3transfer==0.14.0
 six==1.17.0
 urllib3==2.5.0
+
+# --- Dev / CI tools (referenced by devex.profile.ts lint + test commands) ---
+# In a non-PoC repo these would live in requirements-dev.txt; kept inline
+# here so the PR pipeline installs them via the single `uv pip install -r
+# requirements.txt` step the framework emits.
+ruff>=0.4
+pytest>=7.4
+pytest-cov>=4.1
