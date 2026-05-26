@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@devex/framework':
         specifier: github:JynLeazy1/devex#path:/packages/framework
-        version: https://codeload.github.com/JynLeazy1/devex/tar.gz/31a2a103af445d40f55d88fcae2f2bb6255e3b63#path:/packages/framework(@github-actions-workflow-ts/lib@2.5.0)(aws-cdk-lib@2.257.0(constructs@10.6.0))(constructs@10.6.0)
+        version: https://codeload.github.com/JynLeazy1/devex/tar.gz/74dd8a9cebb48bb20898c48deb32c678b565db48#path:/packages/framework(@github-actions-workflow-ts/lib@2.5.0)(aws-cdk-lib@2.257.0(constructs@10.6.0))(constructs@10.6.0)
       '@github-actions-workflow-ts/lib':
         specifier: ^2.5.0
         version: 2.5.0
@@ -236,8 +236,8 @@ packages:
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
     engines: {node: '>=12'}
 
-  '@devex/framework@https://codeload.github.com/JynLeazy1/devex/tar.gz/31a2a103af445d40f55d88fcae2f2bb6255e3b63#path:/packages/framework':
-    resolution: {gitHosted: true, integrity: sha512-NWPOWNQu2hkt2FlhetQmc6tHbZCOht54hWijldSJ9jIzjq9J/SRFnxxyeTR+A3fuD+d8K2VOG/hQP6u45aRCDw==, tarball: https://codeload.github.com/JynLeazy1/devex/tar.gz/31a2a103af445d40f55d88fcae2f2bb6255e3b63}
+  '@devex/framework@https://codeload.github.com/JynLeazy1/devex/tar.gz/74dd8a9cebb48bb20898c48deb32c678b565db48#path:/packages/framework':
+    resolution: {gitHosted: true, integrity: sha512-7/OkBskIJy5qhYsgR6LuNFuupaJ7153AwW3obbRVxbmonZqwBdn7gIhk0vskxjuyYqRA994JyQLCQ56oemOwnA==, tarball: https://codeload.github.com/JynLeazy1/devex/tar.gz/74dd8a9cebb48bb20898c48deb32c678b565db48}
     version: 0.1.0
     engines: {node: '>=18'}
     peerDependencies:
@@ -2082,7 +2082,7 @@ snapshots:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
 
-  '@devex/framework@https://codeload.github.com/JynLeazy1/devex/tar.gz/31a2a103af445d40f55d88fcae2f2bb6255e3b63#path:/packages/framework(@github-actions-workflow-ts/lib@2.5.0)(aws-cdk-lib@2.257.0(constructs@10.6.0))(constructs@10.6.0)':
+  '@devex/framework@https://codeload.github.com/JynLeazy1/devex/tar.gz/74dd8a9cebb48bb20898c48deb32c678b565db48#path:/packages/framework(@github-actions-workflow-ts/lib@2.5.0)(aws-cdk-lib@2.257.0(constructs@10.6.0))(constructs@10.6.0)':
     dependencies:
       '@github-actions-workflow-ts/lib': 2.5.0
       aws-cdk-lib: 2.257.0(constructs@10.6.0)
