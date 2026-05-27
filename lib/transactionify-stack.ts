@@ -50,12 +50,6 @@ export class TransactionifyStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: TransactionifyStackProps) {
     super(scope, id, props)
 
-    // NOTE (PoC scope): the upstream baseline included a `provisioningLambda`
-    // that received `table.grantWriteData(...)` but was NOT exposed as an API
-    // route. It's intentionally dropped here while we evaluate adding an
-    // `extraGrants?: ExtraGrant[]` prop to `PythonLambdaApiProps` for
-    // non-route Lambdas — additive, non-breaking. Tracked as an inner-source
-    // contribution opportunity.
     new PythonLambdaApi(this, 'Api', {
       serviceName: profile.serviceName,
       runtime: profile.runtime,
@@ -63,6 +57,20 @@ export class TransactionifyStack extends cdk.Stack {
       authorizerHandler: 'transactionify.handlers.authorizer.main.handler',
       routes: ROUTES,
       environment: props.environment,
+      // The `Provisioning` Lambda is internal — registers a new tenant by
+      // creating their initial API key + account records. NOT exposed as an
+      // API route (callers reach it via SDK invoke from an off-platform CLI).
+      // Restored upstream parity using `extraGrants`, an inner-source PR
+      // added to the framework after the first adoption surfaced the gap.
+      extraGrants: [
+        {
+          id: 'Provisioning',
+          handler: 'transactionify.handlers.provisioning.main.handler',
+          permission: 'write',
+          description:
+            'Registers a new user by generating an API key. Not exposed as an API endpoint.',
+        },
+      ],
       tags: {
         'finops:Project': 'Transactionify',
         'finops:Service': 'Transactionify API',
